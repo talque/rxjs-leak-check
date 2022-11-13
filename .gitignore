@@ -10,5 +10,6 @@
 /.cache/
 /.idea
 tags
+/.angular/
 
 /node_modules/
