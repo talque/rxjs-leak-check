@@ -23,6 +23,9 @@
         "@angular/platform-browser": "^14.2.0",
         "@angular/platform-browser-dynamic": "^14.2.0",
         "@angular/router": "^14.2.0",
+        "@types/markdown-it": "^12.2.3",
+        "markdown-it": "^13.0.1",
+        "markdown-it-highlightjs": "^4.0.1",
         "rxjs": "~7.5.0",
         "tslib": "^2.3.0",
         "zone.js": "~0.11.4"

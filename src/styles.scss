@@ -1,4 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
 
 @tailwind base;
 @tailwind components;
@@ -6,3 +6,18 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+$custom-typography: mat.define-typography-config(
+    $headline: mat.define-typography-level(
+        $font-size: 48px,
+    ),
+    $body-1: mat.define-typography-level(
+        $font-size: 1rem,
+        $line-height: 1.5,
+    ),
+);
+@include mat.core($custom-typography);
+
+
+@import 'node_modules/highlight.js/scss/github-dark'
