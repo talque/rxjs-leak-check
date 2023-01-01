@@ -1,11 +1,46 @@
 <ng-container
     *ngIf="view | async; let view">
 
+    <mat-toolbar
+        class="bg-transparent">
+        <mat-toolbar-row>
 
+            <button
+                mat-button
+                [matMenuTriggerFor]="menu">{{ view.menu.label }}</button>
+            <mat-menu #menu="matMenu">
+                <button
+                    *ngFor="let option of view.menu.options"
+                    mat-menu-item
+                    (click)="onMenuClick(option.value)">
+                    {{ option.label }}
+                </button>
+            </mat-menu>
+            
+            <button
+                mat-icon-button
+                (click)="onHideClick()"
+                aria-label="Hide all subscriptions"
+                matTooltip="Hide all subscriptions that are currently active">
+                <mat-icon>delete_outline</mat-icon>
+            </button>
+
+            <span class="flex flex-1"></span>
+            <mat-paginator
+                class="bg-transparent"
+                [length]="view.page.length"
+                [pageSize]="view.page.pageSize"
+                [pageSizeOptions]="pageSizeOptions"
+                (page)="onPage($event)"
+                aria-label="Select page">
+            </mat-paginator>
+        </mat-toolbar-row>
+    </mat-toolbar>
+
+    
     <rxjs-leak-check-lib-detail-card
         *ngFor="let subscription of view.subscriptions; trackBy: trackById"
         [view]="subscription">
     </rxjs-leak-check-lib-detail-card>
-
 
 </ng-container>

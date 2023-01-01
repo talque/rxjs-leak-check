@@ -50,12 +50,10 @@ let previous: WeakSet<SubscriptionSource> = new WeakSet();
 /**
  * Return the outer subscriptions that were not preset during the last call
  */
-export function getNewSubscriptions() {
+export function getNewSubscriptions(): readonly SubscriptionSource[] {
     const outer = getOuterSubscriptions();
     const diff: SubscriptionSource[] = outer.filter(
         (sub) => !previous.has(sub));
     previous = new WeakSet(outer);
-    return diff
-        .map((sub) => new SubscriptionStacktrace(sub));
-    // .filter(boringSubscriptionFilter.isNotBoring);
+    return diff;
 }

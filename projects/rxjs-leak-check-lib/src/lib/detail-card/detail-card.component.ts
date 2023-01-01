@@ -18,5 +18,9 @@ export class DetailCardComponent {
         if (!this.view)
             throw new Error('input missing');
     }
+
+    onPrint() {
+        console.error(this.view.source);
+    }
 }
 
