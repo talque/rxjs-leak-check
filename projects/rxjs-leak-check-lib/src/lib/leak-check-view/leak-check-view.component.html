@@ -1,0 +1,11 @@
+<ng-container
+    *ngIf="view | async; let view">
+
+
+    <rxjs-leak-check-lib-detail-card
+        *ngFor="let subscription of view.subscriptions; trackBy: trackById"
+        [view]="subscription">
+    </rxjs-leak-check-lib-detail-card>
+
+
+</ng-container>

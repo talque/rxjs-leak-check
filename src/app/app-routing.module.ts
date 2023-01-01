@@ -8,6 +8,11 @@ const routes: Routes = [
     { path: views.leakOnClick.path, component: views.leakOnClick.component },
     { path: views.leakTakeUntil.path, component: views.leakTakeUntil.component },
     {
+        path: 'check',
+        loadChildren: () => import('@talque/rxjs-leak-check-lib')
+            .then((mod) => mod.RxjsLeakCheckLibRoutingModule)
+    },
+    {
         path: '',
         redirectTo: views.home.path,
         pathMatch: 'full',

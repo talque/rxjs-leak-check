@@ -1,0 +1,10 @@
+<mat-card>
+    <mat-card-title>Subscription #{{ view.index }}</mat-card-title>
+    <mat-card-content>
+        <ol>
+            <li *ngFor="let frame of view.stackFrames">
+                {{ frame.functionName || 'Anonymous function' }}
+            </li>
+        </ol>
+    </mat-card-content>
+</mat-card>
