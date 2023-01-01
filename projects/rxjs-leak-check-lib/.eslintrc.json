@@ -20,7 +20,7 @@
           "error",
           {
             "type": "attribute",
-            "prefix": "leakCheckLib",
+            "prefix": "rxjsLeakCheckLib",
             "style": "camelCase"
           }
         ],
@@ -28,7 +28,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "leak-check-lib",
+            "prefix": "rxjs-leak-check-lib",
             "style": "kebab-case"
           }
         ]

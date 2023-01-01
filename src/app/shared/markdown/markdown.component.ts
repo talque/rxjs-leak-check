@@ -20,9 +20,10 @@ export class MarkdownComponent implements OnInit {
     md: string = '';
 
     @HostBinding('innerHtml')
-    html: string = '';
+        html: string = '';
     
-    @Input('md') set nextSrc(md: string) {
+    /* eslint-disable-next-line @angular-eslint/no-input-rename */
+    @Input('md') set nextMd(md: string) {
         this.md = md;
         this.html = markdownIt.render(md);
     }

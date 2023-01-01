@@ -24,7 +24,7 @@
             <a
                 *ngFor="let item of menu"
                 mat-list-item
-                [href]="item.path">
+                [routerLink]="item.path">
                 {{ item.label }}
             </a>
         </mat-nav-list>

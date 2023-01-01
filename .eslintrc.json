@@ -39,6 +39,11 @@
                         }
                     }
                 ],
+                "@angular-eslint/no-host-metadata-property": [
+                    "error",
+                    { "allowStatic": true }
+                ],
+                "@angular-eslint/no-empty-lifecycle-method": [ "warn" ],
                 "@angular-eslint/directive-selector": [
                     "error",
                     {

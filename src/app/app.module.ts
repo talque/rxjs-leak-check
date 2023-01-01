@@ -6,7 +6,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {MatListModule} from '@angular/material/list';
+import {MatLegacyListModule as MatListModule} from '@angular/material/legacy-list';
 import { LeakOninitViewComponent } from './leak/leak-oninit-view/leak-oninit-view.component';
 import { LeakOnclickViewComponent } from './leak/leak-onclick-view/leak-onclick-view.component';
 import { LeakTakeuntilViewComponent } from './leak/leak-takeuntil-view/leak-takeuntil-view.component';

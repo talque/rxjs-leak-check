@@ -17,11 +17,11 @@ const leakOnClickMarkdown = `
 })
 export class LeakOnclickViewComponent implements OnInit {
 
-  constructor() { }
+    constructor() { }
 
     readonly leakOnClickMarkdown = leakOnClickMarkdown;
     
-  ngOnInit(): void {
-  }
+    ngOnInit(): void {
+    }
 
 }
