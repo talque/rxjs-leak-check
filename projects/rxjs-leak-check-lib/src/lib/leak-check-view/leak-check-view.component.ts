@@ -11,7 +11,10 @@ import { pageSizeOptions } from './page-size-options';
     selector: 'rxjs-leak-check-lib-view',
     templateUrl: './leak-check-view.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    styles: [],
+    styleUrls: ['./leak-check-view.component.scss'],
+    host: {
+        class: 'flex flex-col flex-1 h-full min-h-0 relative',
+    },
     providers: [
         LeakCheckViewStoreService,
         LeakCheckViewModelService,

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import * as ErrorStackParser from 'error-stack-parser';
 import { SubscriptionSource } from "observable-profiler";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, timer } from "rxjs";
 import * as StackTraceGPS from 'stacktrace-gps';
 
 
@@ -14,7 +14,11 @@ type TracebackMap = WeakMap<SubscriptionSource, readonly ErrorStackParser.StackF
 @Injectable({ providedIn: 'root' })
 export class StackTraceLoaderService {
 
-    private queue: readonly SubscriptionSource[] = [];
+    constructor() {
+        (window as any).stl = this;
+    }
+
+    private queue = new Set<SubscriptionSource>();
 
     private readonly map = new WeakMap<SubscriptionSource, readonly ErrorStackParser.StackFrame[]>();
 
@@ -34,19 +38,27 @@ export class StackTraceLoaderService {
      * Start loading the source maps and produce detailed stack traces
      */
     load(subscriptions: readonly SubscriptionSource[]): void {
-        this.queue = [
-            ...this.queue,
-            ...subscriptions,
-        ];
+        this.queue.clear();
+        for (const subscription of subscriptions)
+            if (!this.map.has(subscription))
+                this.queue.add(subscription);
         this.maybeStartTask();
     }
 
+    private queuePop(): SubscriptionSource | undefined {
+        for (const task of this.queue) {
+            this.queue.delete(task)
+            return task
+        }
+        return undefined;
+    }
+
     private maybeStartTask() {
-        if (this.currentTask || this.queue.length === 0)
+        if (this.currentTask)
             return;
-        const task = this.queue[0];
-        this.queue = this.queue.slice(1);
-        this.currentTask = this.loadOne(task);
+        const task = this.queuePop();
+        if (task)
+            this.currentTask = this.loadOne(task);
     }
 
     // keep the instance cached, otherwise source maps are loaded multiple times
@@ -59,6 +71,7 @@ export class StackTraceLoaderService {
         this.map.set(subscription, traceback);
         this.tracebackSubject.next(this.map);
         console.log('Completed traceback:', traceback);
+        await timer(100).toPromise();
         this.currentTask = undefined
         this.maybeStartTask();
     }

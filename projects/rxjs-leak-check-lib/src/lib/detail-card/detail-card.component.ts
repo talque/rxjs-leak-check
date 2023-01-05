@@ -4,7 +4,7 @@ import { DetailCardViewModel } from './detail-card.view-model';
 @Component({
     selector: 'rxjs-leak-check-lib-detail-card',
     templateUrl: './detail-card.component.html',
-    styleUrls: ['./detail-card.component.css'],
+    styleUrls: ['./detail-card.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: {
         class: 'flex flex-none flex-col mx-5 mt-5',

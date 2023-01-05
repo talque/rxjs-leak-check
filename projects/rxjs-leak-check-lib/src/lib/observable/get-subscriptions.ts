@@ -51,9 +51,9 @@ let previous: WeakSet<SubscriptionSource> = new WeakSet();
  * Return the outer subscriptions that were not preset during the last call
  */
 export function getNewSubscriptions(): readonly SubscriptionSource[] {
-    const outer = getOuterSubscriptions();
-    const diff: SubscriptionSource[] = outer.filter(
+    const all = getSubscriptions();
+    const diff: SubscriptionSource[] = all.filter(
         (sub) => !previous.has(sub));
-    previous = new WeakSet(outer);
+    previous = new WeakSet(all);
     return diff;
 }
