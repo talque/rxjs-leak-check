@@ -1,10 +1,11 @@
 import { Injectable } from "@angular/core";
+import * as ErrorStackParser from 'error-stack-parser';
 import { SubscriptionSource } from "observable-profiler";
-import { BehaviorSubject, Subject } from "rxjs";
-import * as StackTrace from 'stacktrace-js';
+import { BehaviorSubject } from "rxjs";
+import * as StackTraceGPS from 'stacktrace-gps';
 
 
-type TracebackMap = WeakMap<SubscriptionSource, readonly StackTrace.StackFrame[]>;
+type TracebackMap = WeakMap<SubscriptionSource, readonly ErrorStackParser.StackFrame[]>;
 
 
 /**
@@ -15,7 +16,7 @@ export class StackTraceLoaderService {
 
     private queue: readonly SubscriptionSource[] = [];
 
-    private readonly map = new WeakMap<SubscriptionSource, readonly StackTrace.StackFrame[]>();
+    private readonly map = new WeakMap<SubscriptionSource, readonly ErrorStackParser.StackFrame[]>();
 
     private readonly tracebackSubject = new BehaviorSubject<TracebackMap>(this.map);
 
@@ -48,8 +49,13 @@ export class StackTraceLoaderService {
         this.currentTask = this.loadOne(task);
     }
 
+    // keep the instance cached, otherwise source maps are loaded multiple times
+    private readonly gps = new StackTraceGPS();
+
     private async loadOne(subscription: SubscriptionSource): Promise<void> {
-        const traceback = await StackTrace.fromError(subscription);
+        const stackframes = ErrorStackParser.parse(subscription);
+        const traceback = await Promise.all(
+            stackframes.map((sf) => this.gps.getMappedLocation(sf)));
         this.map.set(subscription, traceback);
         this.tracebackSubject.next(this.map);
         console.log('Completed traceback:', traceback);

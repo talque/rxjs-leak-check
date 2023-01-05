@@ -25,7 +25,7 @@ export class LeakCheckViewModelService {
     private readonly subscriptions = this.hideSubject.pipe(
         startWith(undefined),
         map(() => getNewSubscriptions()),
-        // tap((subscriptions) => this.stackTraceLoaderService.load(subscriptions)),
+        tap((subscriptions) => this.stackTraceLoaderService.load(subscriptions)),
     );
 
     private readonly throttledTracebacks = this.stackTraceLoaderService.traceback.pipe(

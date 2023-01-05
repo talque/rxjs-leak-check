@@ -11,11 +11,12 @@ export interface DetailCardViewModel {
 
 export function makeDetailCardViewModel(
     source: SubscriptionSource,
+    stackFrames: readonly ErrorStackParser.StackFrame[],
     index: number,
 ): DetailCardViewModel {
     return {
         source: source,
         index: index,
-        stackFrames: ErrorStackParser.parse(source),
+        stackFrames: stackFrames,
     }
 }

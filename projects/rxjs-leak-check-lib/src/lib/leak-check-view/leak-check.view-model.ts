@@ -4,6 +4,7 @@ import { UnreachableCaseError } from '../util/unreachable-case-error';
 import { LeakCheckState } from './leak-check.state';
 import { LeakFilter } from './leak-filter.enum';
 import * as StackTrace from 'stacktrace-js';
+import * as ErrorStackParser from 'error-stack-parser';
 
 
 export interface LeakCheckViewModel {
@@ -26,7 +27,7 @@ export interface LeakCheckViewModel {
 
 export function makeLeakCheckViewModel(
     subscriptions: readonly SubscriptionSource[],
-    traceback: WeakMap<SubscriptionSource, readonly StackTrace.StackFrame[]>,
+    traceback: WeakMap<SubscriptionSource, readonly ErrorStackParser.StackFrame[]>,
     state: LeakCheckState,
 ): LeakCheckViewModel {
     const startIndex = state.pageIndex * state.pageSize;
@@ -46,8 +47,20 @@ export function makeLeakCheckViewModel(
         },
         subscriptions: subscriptions
             .slice(startIndex, startIndex + state.pageSize)
-            .map((source, index) => makeDetailCardViewModel(source, startIndex + index)),
+            .map((source, index) => makeDetailCardViewModel(
+                source,
+                getStackFrames(source, traceback),
+                startIndex + index)),
     };
+}
+
+function getStackFrames(
+    subscription: SubscriptionSource,
+    tracebackMap: WeakMap<SubscriptionSource, readonly ErrorStackParser.StackFrame[]>,
+): readonly ErrorStackParser.StackFrame[] {
+    const traceback = tracebackMap.get(subscription);
+    if (traceback) return traceback;
+    return ErrorStackParser.parse(subscription)
 }
 
 
