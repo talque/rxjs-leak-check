@@ -5,11 +5,13 @@
     "ng": "ng",
     "start": "ng serve --hmr",
     "build": "ng build",
+    "build:lib": "ng build rxjs-leak-check-lib",
     "watch": "ng build --watch --configuration development",
     "test": "jest",
     "test:lib": "jest projects/rxjs-leak-check-lib",
     "lint": "ng lint",
-    "lint:lib": "ng lint --project rxjs-leak-check-lib"
+    "lint:lib": "ng lint --project rxjs-leak-check-lib",
+    "publish:npm": "ng build rxjs-leak-check-lib --configuration production && cd dist/rxjs-leak-check-lib && npm publish --access public"
   },
   "private": true,
   "dependencies": {

@@ -1,30 +1,26 @@
 import { inject, Injectable } from '@angular/core';
-import { combineLatest, Observable, Subject } from 'rxjs';
-import { tap, map, startWith, throttleTime } from 'rxjs/operators';
-import { getNewSubscriptions } from '../observable/get-subscriptions';
+import { combineLatest, Observable, of } from 'rxjs';
+import { map, tap, throttleTime } from 'rxjs/operators';
+import { LeakCheckViewModel, makeLeakCheckViewModel } from '../leak-check/leak-check.view-model';
+import { getSubscriptions } from '../observable/get-subscriptions';
 import { StackTraceLoaderService } from '../util/stack-trace-loader.service';
+import { LeakCheckPersistentStoreService } from './leak-check-persistent-store.service';
 import { LeakCheckViewStoreService } from './leak-check-view-store.service';
-import { LeakCheckViewModel, makeLeakCheckViewModel } from './leak-check.view-model';
 
 
 @Injectable(/* local */)
 export class LeakCheckViewModelService {
 
     private readonly leakCheckViewStoreService = inject(LeakCheckViewStoreService);
+    private readonly leakCheckPersistentStoreService = inject(LeakCheckPersistentStoreService);
     private readonly stackTraceLoaderService = inject(StackTraceLoaderService);
 
-    private hideSubject = new Subject<void>();
-
     /**
-     * Hide currently-shown subscriptions, and only show new ones
+     * The list of subscriptions when the component was created
      */
-    hideSubscriptions(): void {
-        this.hideSubject.next();
-    }
-
-    private readonly subscriptions = this.hideSubject.pipe(
-        startWith(undefined),
-        map(() => getNewSubscriptions()),
+    private readonly subscriptions = of(
+        getSubscriptions()
+    ).pipe(
         tap((subscriptions) => this.stackTraceLoaderService.load(subscriptions)),
     );
 
@@ -36,8 +32,9 @@ export class LeakCheckViewModelService {
         this.subscriptions,
         this.throttledTracebacks,
         this.leakCheckViewStoreService.state,
+        this.leakCheckPersistentStoreService.state,
     ).pipe(
-        map(([subscriptions, traceback, state]) =>
-            makeLeakCheckViewModel(subscriptions, traceback, state)),
+        map(([subscriptions, traceback, viewState, persistentState]) =>
+            makeLeakCheckViewModel(subscriptions, traceback, viewState, persistentState)),
     );
 }

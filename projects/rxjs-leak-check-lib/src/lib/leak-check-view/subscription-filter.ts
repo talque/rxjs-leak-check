@@ -12,6 +12,7 @@ export class SubscriptionFilter {
     constructor(
         private readonly leakFilter: LeakFilter,
         private readonly subscriptions: readonly SubscriptionSource[],
+        private readonly hidden: ReadonlySet<SubscriptionSource>,
         private readonly tracebackMap: WeakMap<SubscriptionSource, readonly ErrorStackParser.StackFrame[]>,
     ) { }
 
@@ -19,6 +20,8 @@ export class SubscriptionFilter {
         switch (this.leakFilter) {
             case LeakFilter.ALL:
                 return this.filterAll.bind(this);
+            case LeakFilter.NEW:
+                return this.filterNew.bind(this);
             case LeakFilter.OUTER:
                 return this.filterOuter.bind(this);
             case LeakFilter.INTERESTING:
@@ -36,6 +39,13 @@ export class SubscriptionFilter {
     }
 
     /**
+     * filter that only includes new (not hidden) subscriptions
+     */
+    private filterNew(subscription: SubscriptionSource): boolean {
+        return this.newSubs().has(subscription);
+    }
+
+    /**
      * filter that only includes outer subscriptions
      */
     private filterOuter(subscription: SubscriptionSource): boolean {
@@ -46,6 +56,8 @@ export class SubscriptionFilter {
      * filter for the "interesting" subscriptions
      */
     private filterInteresting(subscription: SubscriptionSource): boolean {
+        if (!this.filterOuter(subscription))
+            return false;
         const traceback = this.tracebackMap.get(subscription);
         if (!traceback)
             return false; // loading...
@@ -65,14 +77,28 @@ export class SubscriptionFilter {
         return true;
     }
 
-    private _outerCache: Set<SubscriptionSource> | undefined;
+    private _newSubsCache: ReadonlySet<SubscriptionSource> | undefined;
 
-    private outer(): Set<SubscriptionSource> {
+    private newSubs(): ReadonlySet<SubscriptionSource> {
+        if (this._newSubsCache)
+            return this._newSubsCache;
+        const newSubs = new Set<SubscriptionSource>();
+        for (const val of this.subscriptions) {
+            if (this.hidden.has(val))
+                continue;
+            newSubs.add(val);
+        }
+        return this._newSubsCache = newSubs;
+    }
+    
+    private _outerCache: ReadonlySet<SubscriptionSource> | undefined;
+
+    private outer(): ReadonlySet<SubscriptionSource> {
         if (this._outerCache)
             return this._outerCache;
         const outer = new Set<SubscriptionSource>();
         const seen = new Set<number>();
-        for (const val of this.subscriptions) {
+        for (const val of this.newSubs()) {
             if (seen.has(val.id))
                 continue;
             outer.add(val);

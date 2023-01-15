@@ -10,12 +10,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { HelpCardComponent } from './help-card/help-card.component';
+import { LeakCheckComponent } from './leak-check/leak-check.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @NgModule({
     declarations: [
         RxjsLeakCheckViewComponent,
-        DetailCardComponent
+        DetailCardComponent,
+        HelpCardComponent,
+        LeakCheckComponent
     ],
     imports: [
         CommonModule,
@@ -26,6 +31,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
         MatIconModule,
         MatButtonModule,
         MatMenuModule,
+        MatSnackBarModule,
         MatProgressSpinnerModule,
     ],
     exports: [

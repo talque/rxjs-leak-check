@@ -1,0 +1,64 @@
+<mat-toolbar
+    class="bg-transparent">
+    <mat-toolbar-row>
+
+        <button
+            mat-button
+            [matMenuTriggerFor]="menu">{{ view.menu.label }}</button>
+        <mat-menu #menu="matMenu">
+            <button
+                *ngFor="let option of view.menu.options"
+                mat-menu-item
+                (click)="onMenuClick(option.value)">
+                {{ option.label }}
+            </button>
+        </mat-menu>
+        
+        <button
+            mat-icon-button
+            (click)="onHideClick()"
+            aria-label="Hide all subscriptions"
+            matTooltip="Forever hide all subscriptions that are currently active">
+            <mat-icon>delete_outline</mat-icon>
+        </button>
+
+        <span class="flex flex-1"></span>
+        <mat-paginator
+            class="bg-transparent"
+            [length]="view.page.length"
+            [pageSize]="view.page.pageSize"
+            [pageSizeOptions]="view.pageSizeOptions"
+            (page)="onPage($event)"
+            aria-label="Select page">
+        </mat-paginator>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<div class="flex flex-col flex-1 min-h-0 overflow-y-auto pb-5 scrollbar">
+
+    <rxjs-leak-check-lib-help-card
+        *ngIf="view.help"
+        (action)="action.next($event)">
+    </rxjs-leak-check-lib-help-card>
+    
+    <rxjs-leak-check-lib-detail-card
+        *ngFor="let subscription of view.subscriptions; trackBy: trackById"
+        [view]="subscription">
+    </rxjs-leak-check-lib-detail-card>
+</div>
+
+<div
+    *ngIf="view.progress; let progress"
+    class="absolute top-0 bottom-0 left-0 right-0
+           pointer-events-none flex items-center justify-center">
+    <div class="flex flex-col flex-none items-center p-10 bg-black/75">
+        <mat-progress-spinner
+            mode="determinate"
+            [value]="progress.percent">
+        </mat-progress-spinner>
+        <div>
+            Parsing source maps {{ progress.current }} / {{ progress.total }}
+        </div>
+    </div>
+</div>     
+

@@ -1,0 +1,7 @@
+@use '@angular/material' as mat;
+
+$my-palette: mat.define-palette(mat.$pink-palette);
+
+:host {
+    background: mat.get-color-from-palette($my-palette, 700);
+}

@@ -1,0 +1,61 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>
+            Help
+        </mat-card-title>
+    </mat-card-header>
+    
+    <mat-card-content>
+        <p>
+            Here you can see a list of active subscriptions to
+            observables. Many of these are not leaks but required for
+            the correct working of your program. To check your program
+            for leaks, you should
+        </p>
+        
+        <ol class="list-decimal list-outside pl-7">
+            <li>
+                Open the page that contains the code you want to
+                check, to initialize any subscriptions once. If you
+                want to check a particular action (e.g. click on a
+                button) then perform that action now.
+            </li>
+            
+            <li>
+                Then open this page. You'll see many subscriptions,
+                almost none from your code. Click
+                the <mat-icon class="icon">delete_outline</mat-icon>
+                button to hide these until the next reload.
+            </li>
+            
+            <li>
+                Go back to the page that contains the code you want to
+                check. If you want to check a particular action
+                (e.g. click on a button) then perform that action
+                again. Any subscriptions that you create now are
+                potential memory leaks, unless they are unsubscribed
+                when you leave.
+            </li>
+            
+            <li>
+                Open this page for the second time. Any new
+                subscriptions are either leaks from your code, or
+                internally created by framework code. If you select
+                <span class="italic">Interesting subscriptions</span>
+                then anything
+                from <span class="italic">node_modules</span> is
+                filtered out, and only leaks from your code should
+                remain.
+            </li>
+        </ol>
+
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+        <button
+            mat-button
+            (click)="onHideClick()">
+            Hide
+        </button>
+    </mat-card-actions>
+</mat-card>

@@ -1,11 +1,13 @@
 {
-  "name": "rxjs-leak-check-lib",
-  "version": "0.0.1",
-  "peerDependencies": {
-    "@angular/common": "^14.2.0",
-    "@angular/core": "^14.2.0"
-  },
-  "dependencies": {
-    "tslib": "^2.3.0"
-  }
+    "name": "@talque/rxjs-leak-check-lib",
+    "version": "0.0.1",
+    "peerDependencies": {
+        "@angular/common": "^14.2.0",
+        "@angular/core": "^14.2.0"
+    },
+    "dependencies": {
+        "observable-profiler": "^0.1.1",
+        "error-stack-parser": "^2.1.4",
+        "tslib": "^2.3.0"
+    }
 }

@@ -49,8 +49,10 @@ export const menu = [
     views.check,
     views.leakOnInit,
     views.leakOnClick,
+    /*
     views.leakTakeUntil,
     views.install,
     views.theory,
     views.bestPractices,
+    */
 ];

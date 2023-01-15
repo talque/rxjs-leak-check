@@ -1,26 +1,25 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from '@angular/core';
 import * as ErrorStackParser from 'error-stack-parser';
-import { SubscriptionSource } from "observable-profiler";
-import { BehaviorSubject, timer } from "rxjs";
-import * as StackTraceGPS from 'stacktrace-gps';
+import { StackFrame } from 'error-stack-parser';
+import { SubscriptionSource } from 'observable-profiler';
+import { BehaviorSubject } from 'rxjs';
+import { StackFrameLoaderService } from './stack-frame-loader.service';
 
 
-type TracebackMap = WeakMap<SubscriptionSource, readonly ErrorStackParser.StackFrame[]>;
+type TracebackMap = WeakMap<SubscriptionSource, readonly StackFrame[]>;
 
 
 /**
- * Asynchronously load source maps and produce better stack frames
+ * Asynchronously load source maps and produce better stack traces
  */
 @Injectable({ providedIn: 'root' })
 export class StackTraceLoaderService {
 
-    constructor() {
-        (window as any).stl = this;
-    }
+    private readonly stackFrameLoaderService = inject(StackFrameLoaderService);
 
     private queue = new Set<SubscriptionSource>();
 
-    private readonly map = new WeakMap<SubscriptionSource, readonly ErrorStackParser.StackFrame[]>();
+    private readonly map = new WeakMap<SubscriptionSource, readonly StackFrame[]>();
 
     private readonly tracebackSubject = new BehaviorSubject<TracebackMap>(this.map);
 
@@ -28,9 +27,6 @@ export class StackTraceLoaderService {
      * Emit an updated mapping to stackframes whenever we load more source maps
      */
     readonly traceback = this.tracebackSubject.asObservable();
-
-
-    // return this._detailed = StackTrace.fromError(this.source);
 
     private currentTask: undefined | Promise<void>;
 
@@ -61,17 +57,13 @@ export class StackTraceLoaderService {
             this.currentTask = this.loadOne(task);
     }
 
-    // keep the instance cached, otherwise source maps are loaded multiple times
-    private readonly gps = new StackTraceGPS();
-
     private async loadOne(subscription: SubscriptionSource): Promise<void> {
         const stackframes = ErrorStackParser.parse(subscription);
         const traceback = await Promise.all(
-            stackframes.map((sf) => this.gps.getMappedLocation(sf)));
+            stackframes.map((sf) => this.stackFrameLoaderService.load(sf)));
         this.map.set(subscription, traceback);
         this.tracebackSubject.next(this.map);
-        console.log('Completed traceback:', traceback);
-        await timer(100).toPromise();
+        // console.log('Completed traceback:', traceback);
         this.currentTask = undefined
         this.maybeStartTask();
     }

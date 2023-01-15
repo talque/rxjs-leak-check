@@ -2,27 +2,11 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 
 const homeMarkdown = `
-# Home
+# RxJS Leak Check
 
-The quick brown fox jumps over the lazy dog
-
-\`\`\`js
-var foo = function (bar) {
-  return bar++;
-};
-
-console.log(foo(5));
-\`\`\`
-
-and
-\`\`\`ts
-var foo = function (bar: number) {
-  return bar++;
-};
-
-console.log(foo(5));
-\`\`\`
-
+This is a tool that helps you identify subscription leaks in your
+program. This website is both the source code, documentation, and an
+interactive demo.
 `;
 
 

@@ -13,3 +13,4 @@ tags
 /.angular/
 
 /node_modules/
+/dist/
