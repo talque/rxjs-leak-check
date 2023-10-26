@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { HomeViewComponent } from './home-view.component';
+import { MarkdownComponent } from '../shared/markdown/markdown.component';
+
 
 describe('HomeViewComponent', () => {
     let component: HomeViewComponent;
@@ -8,7 +9,10 @@ describe('HomeViewComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [ HomeViewComponent ]
+            declarations: [
+                HomeViewComponent,
+                MarkdownComponent,
+            ]
         })
     .compileComponents();
 

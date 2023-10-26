@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { DetailCardViewModel } from './detail-card.view-model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -12,7 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
         class: 'flex flex-none flex-col mx-5 mt-5 cursor-pointer',
     }
 })
-export class DetailCardComponent {
+export class DetailCardComponent implements OnInit {
 
     @Input() view!: DetailCardViewModel;
 

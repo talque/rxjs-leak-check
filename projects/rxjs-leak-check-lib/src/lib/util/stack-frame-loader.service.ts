@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { StackFrame } from 'error-stack-parser';
-import * as StackTraceGPS from 'stacktrace-gps';
+import StackTraceGPS from 'stacktrace-gps';
 
 
 function cacheKey(sf: StackFrame): string {

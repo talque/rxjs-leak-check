@@ -12,8 +12,8 @@ we get from an injected service, in order to be notified of updates.
 @Component({
 export class MyComponent implements OnInit {
 
-    constructor(private readonly myService: MyService) { }
-
+    private readonly myService = inject(MyService);
+    
     ngOnInit(): void {
         this.myService.observable.subscribe({
             next: (value) => console.log('Next value:', value),
@@ -46,8 +46,6 @@ const longLivedObservable = new Subject<void>();
 })
 export class LeakOninitViewComponent implements OnInit {
     
-    constructor() { }
-
     readonly leakOnInitMarkdown = leakOnInitMarkdown;
 
     ngOnInit(): void {

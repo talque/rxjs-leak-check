@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { LeakOninitViewComponent } from './leak-oninit-view.component';
+import { MarkdownComponent } from '../../shared/markdown/markdown.component';
+
 
 describe('LeakOninitViewComponent', () => {
     let component: LeakOninitViewComponent;
@@ -8,7 +9,10 @@ describe('LeakOninitViewComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [ LeakOninitViewComponent ]
+            declarations: [
+                LeakOninitViewComponent,
+                MarkdownComponent,
+            ],
         })
     .compileComponents();
 

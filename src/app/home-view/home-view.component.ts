@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 
 const homeMarkdown = `
@@ -19,13 +19,7 @@ interactive demo.
         class: 'flex flex-col p-8',
     }
 })
-export class HomeViewComponent implements OnInit {
+export class HomeViewComponent {
 
     readonly homeMarkdown = homeMarkdown;
-    
-    constructor() { }
-    
-    ngOnInit(): void {
-    }
-
 }

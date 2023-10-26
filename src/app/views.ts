@@ -25,7 +25,7 @@ export const views = {
         component: LeakOnclickViewComponent,
     },
     leakTakeUntil: {
-        label: 'Leak takeUntil()',
+        label: 'Leak takeUntil',
         path: 'leak/take-until',
         component: LeakTakeuntilViewComponent,
     },
@@ -49,8 +49,8 @@ export const menu = [
     views.check,
     views.leakOnInit,
     views.leakOnClick,
-    /*
     views.leakTakeUntil,
+    /*
     views.install,
     views.theory,
     views.bestPractices,

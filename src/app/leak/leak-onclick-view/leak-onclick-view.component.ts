@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Subject } from 'rxjs';
 
 
@@ -46,14 +46,9 @@ const longLivedObservable = new Subject<void>();
         class: 'flex flex-col p-8',
     }
 })
-export class LeakOnclickViewComponent implements OnInit {
-
-    constructor() { }
+export class LeakOnclickViewComponent {
 
     readonly leakOnClickMarkdown = leakOnClickMarkdown;
-    
-    ngOnInit(): void {
-    }
 
     onClick(): void {
         longLivedObservable.subscribe({

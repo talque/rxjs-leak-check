@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { LeakTakeuntilViewComponent } from './leak-takeuntil-view.component';
+import { MarkdownComponent } from '../../shared/markdown/markdown.component';
+
 
 describe('LeakTakeuntilViewComponent', () => {
     let component: LeakTakeuntilViewComponent;
@@ -8,7 +9,10 @@ describe('LeakTakeuntilViewComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [ LeakTakeuntilViewComponent ]
+            declarations: [
+                LeakTakeuntilViewComponent,
+                MarkdownComponent,
+            ]
         })
     .compileComponents();
 

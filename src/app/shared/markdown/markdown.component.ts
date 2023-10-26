@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, HostBinding, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
 import MarkdownIt from 'markdown-it';
 import mdHighlight from 'markdown-it-highlightjs';
 
@@ -15,7 +15,7 @@ const markdownIt = MarkdownIt().use(mdHighlight);
         class: 'text',
     }
 })
-export class MarkdownComponent implements OnInit {
+export class MarkdownComponent {
 
     md: string = '';
 
@@ -27,10 +27,4 @@ export class MarkdownComponent implements OnInit {
         this.md = md;
         this.html = markdownIt.render(md);
     }
-
-    constructor() { }
-    
-    ngOnInit(): void {
-    }
-
 }
