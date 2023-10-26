@@ -28,8 +28,8 @@ Here is a simple example, clicking the button calls
         longLivedObservable.subscribe();
     }
 \`\`\`
-which creates a new subscription that runs forever, since th 
-\`longLivedObservable\` just doesn't complete during the runtime of the
+which creates a new subscription that runs forever, since the
+\`longLivedObservable\` just does not complete during the runtime of the
 browser session.
 `;
 

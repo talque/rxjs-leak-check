@@ -6,11 +6,13 @@ import { getSubscriptions } from '../observable/get-subscriptions';
 import { StackTraceLoaderService } from '../util/stack-trace-loader.service';
 import { LeakCheckPersistentStoreService } from './leak-check-persistent-store.service';
 import { LeakCheckViewStoreService } from './leak-check-view-store.service';
+import { LeakCheckSubscriptionListService } from '../observable/leak-check-subscription-list.service';
 
 
 @Injectable(/* local */)
 export class LeakCheckViewModelService {
 
+    private readonly leakCheckSubscriptionListService = inject(LeakCheckSubscriptionListService);
     private readonly leakCheckViewStoreService = inject(LeakCheckViewStoreService);
     private readonly leakCheckPersistentStoreService = inject(LeakCheckPersistentStoreService);
     private readonly stackTraceLoaderService = inject(StackTraceLoaderService);
@@ -19,7 +21,7 @@ export class LeakCheckViewModelService {
      * The list of subscriptions when the component was created
      */
     private readonly subscriptions = of(
-        getSubscriptions()
+        this.leakCheckSubscriptionListService.subscriptions()
     ).pipe(
         tap((subscriptions) => this.stackTraceLoaderService.load(subscriptions)),
     );
@@ -28,12 +30,12 @@ export class LeakCheckViewModelService {
         throttleTime(500, undefined, { leading: true, trailing: true }),
     );
 
-    readonly view: Observable<LeakCheckViewModel> = combineLatest(
+    readonly view: Observable<LeakCheckViewModel> = combineLatest([
         this.subscriptions,
         this.throttledTracebacks,
         this.leakCheckViewStoreService.state,
         this.leakCheckPersistentStoreService.state,
-    ).pipe(
+    ]).pipe(
         map(([subscriptions, traceback, viewState, persistentState]) =>
             makeLeakCheckViewModel(subscriptions, traceback, viewState, persistentState)),
     );
