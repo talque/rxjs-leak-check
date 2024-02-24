@@ -8,17 +8,25 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
-$custom-typography: mat.define-typography-config(
-    $headline-5: mat.define-typography-level(
-        $font-size: 48px,
+$custom-theme: mat.define-light-theme((
+    color: (
+        primary: mat.define-palette(mat.$indigo-palette),
+        accent: mat.define-palette(mat.$pink-palette),
     ),
-    $body-2: mat.define-typography-level(
-        $font-size: 1rem,
-        $line-height: 1.5,
+    typography: mat.define-typography-config(
+        $headline-5: mat.define-typography-level(
+            $font-size: 48px,
+        ),
+        $body-2: mat.define-typography-level(
+            $font-size: 1rem,
+            $line-height: 1.5,
+        ),
     ),
-);
+));
 
-@include mat.all-component-typographies($custom-typography);
+
 @include mat.core();
+@include mat.all-component-bases($custom-theme);
 
-@import 'node_modules/highlight.js/scss/github-dark'
+
+@import 'node_modules/highlight.js/scss/github-dark.scss'

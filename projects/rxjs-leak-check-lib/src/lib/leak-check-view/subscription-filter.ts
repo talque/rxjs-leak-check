@@ -70,9 +70,7 @@ export class SubscriptionFilter {
     private isInterestingStackFrame(stackFrame: ErrorStackParser.StackFrame): boolean {
         if (!(stackFrame.fileName))
             return true;
-        if (stackFrame.fileName.startsWith('webpack:///projects/rxjs-leak-check-lib'))
-            return false;
-        if (stackFrame.fileName.startsWith('webpack:///node_modules'))
+        if (stackFrame.fileName.indexOf('/node_modules/') >= 0)
             return false;
         return true;
     }
