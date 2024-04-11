@@ -1,6 +1,6 @@
 {
   "name": "rxjs-leak-check",
-  "version": "0.0.0",
+  "version": "0.0.2",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --hmr",
@@ -13,7 +13,6 @@
     "lint:lib": "ng lint --project rxjs-leak-check-lib",
     "publish:npm": "ng build rxjs-leak-check-lib --configuration production && cd dist/rxjs-leak-check-lib && npm publish --access public"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "^17.2.2",
     "@angular/cdk": "^17.2.1",
