@@ -19,9 +19,6 @@ type EventModel =
     templateUrl: './leak-check.component.html',
     styleUrls: ['./leak-check.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    host: {
-        class: 'flex flex-col flex-1 h-full min-h-0 relative',
-    },
 })
 export class LeakCheckComponent implements OnInit {
 

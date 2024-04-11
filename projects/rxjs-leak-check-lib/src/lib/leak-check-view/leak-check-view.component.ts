@@ -13,9 +13,6 @@ type EventModel = Parameters<LeakCheckViewActionService['handle']>[0];
     templateUrl: './leak-check-view.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrls: ['./leak-check-view.component.scss'],
-    host: {
-        class: 'flex flex-col flex-1 h-full min-h-0 relative',
-    },
     providers: [
         LeakCheckViewStoreService,
         LeakCheckViewModelService,

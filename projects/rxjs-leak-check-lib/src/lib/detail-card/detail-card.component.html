@@ -9,14 +9,14 @@
     <mat-card-content>
         <div
             *ngFor="let frame of view.stackFrames; let index=index"
-            class="flex items-baseline">
-            <div class="text-sm text-gray-400 pr-3">
+            class="content">
+            <div class="index text-sm">
                 #{{ index }}:
             </div>
             <div class="truncate">
                 {{ frame.functionName || 'Anonymous function' }}()
             </div>
-            <div class="flex-1 pl-10 text-sm text-gray-400 truncate text-right">
+            <div class="file-location text-sm truncate">
                 ({{ frame.lineNumber }}, {{ frame.columnNumber }})
                 &#64;
                 {{ frame.fileName }}

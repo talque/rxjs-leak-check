@@ -1,0 +1,40 @@
+
+:host {
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    margin-left: 1.3rem;
+    margin-right: 1.3rem;
+    margin-top: 1.3rem;
+    cursor: pointer;
+}
+
+.content {
+    display: flex;
+    align-items: baseline;
+}
+
+.index {
+    color: rgb(156 163 175);
+    padding-right: 0.75rem;
+}
+
+.text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+
+.truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.file-location {
+    flex: 1 1 0%;
+    padding-left: 2.5rem;
+    color: rgb(156 163 175);
+    text-align: right;
+}

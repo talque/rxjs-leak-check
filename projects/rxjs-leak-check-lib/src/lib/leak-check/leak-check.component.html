@@ -1,5 +1,4 @@
-<mat-toolbar
-    class="bg-transparent">
+<mat-toolbar>
     <mat-toolbar-row>
 
         <button
@@ -22,9 +21,8 @@
             <mat-icon>delete_outline</mat-icon>
         </button>
 
-        <span class="flex flex-1"></span>
+        <span class="spacer"></span>
         <mat-paginator
-            class="bg-transparent"
             [length]="view.page.length"
             [pageSize]="view.page.pageSize"
             [pageSizeOptions]="view.pageSizeOptions"
@@ -34,7 +32,7 @@
     </mat-toolbar-row>
 </mat-toolbar>
 
-<div class="flex flex-col flex-1 min-h-0 overflow-y-auto pb-5 scrollbar">
+<div class="content">
 
     <rxjs-leak-check-lib-help-card
         *ngIf="view.help"
@@ -49,9 +47,8 @@
 
 <div
     *ngIf="view.progress; let progress"
-    class="absolute top-0 bottom-0 left-0 right-0
-           pointer-events-none flex items-center justify-center">
-    <div class="flex flex-col flex-none items-center p-10 bg-black/75">
+    class="spinner">
+    <div class="spinner-background">
         <mat-progress-spinner
             mode="determinate"
             [value]="progress.percent">

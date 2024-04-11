@@ -6,9 +6,6 @@ import { HelpCardEventModel, HelpCardEventType } from './help-card.event-model';
     templateUrl: './help-card.component.html',
     styleUrls: ['./help-card.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    host: {
-        class: 'flex flex-none flex-col mx-5 mt-5',
-    }
 })
 export class HelpCardComponent {
 
