@@ -1,9 +1,9 @@
 {
     "name": "@talque/rxjs-leak-check-lib",
-    "version": "0.0.3",
+    "version": "0.0.5",
     "peerDependencies": {
-        "@angular/common": "^14.2.0",
-        "@angular/core": "^14.2.0"
+        "@angular/common": ">=17.0.0",
+        "@angular/core": ">=17.0.0"
     },
     "dependencies": {
         "observable-profiler": "^0.1.1",
