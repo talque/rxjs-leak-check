@@ -5,7 +5,9 @@
         "entryFile": "src/public-api.ts"
     },
     "allowedNonPeerDependencies": [
+        "error-stack-parser",
         "observable-profiler",
-        "error-stack-parser"
+        "stacktrace-js",
+        "stacktrace-gps"
     ]
 }

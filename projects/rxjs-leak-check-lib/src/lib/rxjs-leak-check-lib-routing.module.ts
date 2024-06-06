@@ -17,9 +17,6 @@ const routes: Routes = [
         RouterModule.forChild(routes),
         RxjsLeakCheckLibModule,
     ],
-    exports: [
-        RouterModule,
-    ]
 })
 export class RxjsLeakCheckLibRoutingModule {
 }

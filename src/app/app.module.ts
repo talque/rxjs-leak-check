@@ -13,8 +13,9 @@ import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { FooterComponent } from './footer/footer.component';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -27,8 +28,10 @@ import { FooterComponent } from './footer/footer.component';
         HomeViewComponent,
         FooterComponent
     ],
+    bootstrap: [
+        AppComponent,
+    ],
     imports: [
-        HttpClientModule,
         BrowserModule,
         BrowserAnimationsModule,
         MatToolbarModule,
@@ -38,8 +41,9 @@ import { FooterComponent } from './footer/footer.component';
         MatListModule,
         AppRoutingModule,
     ],
-    providers: [MatIconRegistry],
-    bootstrap: [AppComponent]
+    providers: [
+        MatIconRegistry, provideHttpClient(withInterceptorsFromDi())
+    ],
 })
 export class AppModule {
 

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { views } from './views';
 
+
 const routes: Routes = [
     { path: views.home.path, component: views.home.component },
     { path: views.leakOnInit.path, component: views.leakOnInit.component },
@@ -22,6 +23,6 @@ const routes: Routes = [
 
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule]
+    exports: [RouterModule],
 })
 export class AppRoutingModule { }
