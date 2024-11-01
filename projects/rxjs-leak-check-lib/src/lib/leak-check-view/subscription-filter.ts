@@ -56,7 +56,7 @@ export class SubscriptionFilter {
      * filter for the "interesting" subscriptions
      */
     private filterInteresting(subscription: SubscriptionSource): boolean {
-        if (!this.filterOuter(subscription))
+        if (!this.newSubs().has(subscription))
             return false;
         const traceback = this.tracebackMap.get(subscription);
         if (!traceback)
@@ -96,11 +96,21 @@ export class SubscriptionFilter {
             return this._outerCache;
         const outer = new Set<SubscriptionSource>();
         const seen = new Set<number>();
+        let root: SubscriptionSource | undefined = undefined;
         for (const val of this.newSubs()) {
-            if (seen.has(val.id))
+            if (seen.has(val.id)) {
+                root = val;
                 continue;
+            }
             outer.add(val);
+            if (root) {
+                outer.add(root);
+                root = undefined;
+            }
             seen.add(val.id);
+        }
+        if (root) {
+            outer.add(root);
         }
         return this._outerCache = outer;
     }
